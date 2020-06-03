@@ -3,6 +3,7 @@ from team.models import Person
 from goals.models import Goal
 import pandas as pd
 from collections import namedtuple
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Standup(models.Model):
@@ -14,6 +15,11 @@ class Standup(models.Model):
 
     def __str__(self):
         return str(self.person) + "-" + str(self.date)
+
+
+    @property
+    def user(self):
+        return self.person.user
 
     @property
     def week(self):
