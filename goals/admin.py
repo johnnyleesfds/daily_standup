@@ -6,8 +6,7 @@ from django.forms import TextInput, Textarea
 
 class GoalAdmin(admin.ModelAdmin):
     list_display = ('date', 'tracker','name')
-    list_editable = ('date', 'tracker', 'name')
-    list_display_links = None
+
 
     # formfield_overrides = {
     #     models.CharField: {'widget': TextInput(attrs={'size':'150'})},

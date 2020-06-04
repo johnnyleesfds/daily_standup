@@ -5,6 +5,7 @@ import pandas as pd
 from collections import namedtuple
 from django.contrib.auth.models import User
 
+
 # Create your models here.
 class Standup(models.Model):
     date = models.DateField()
@@ -16,7 +17,6 @@ class Standup(models.Model):
     def __str__(self):
         return str(self.person) + "-" + str(self.date)
 
-
     @property
     def user(self):
         return self.person.user
@@ -26,7 +26,8 @@ class Standup(models.Model):
         return self.date.isocalendar()[1]
 
     def create_tuple(self, d):
-        Deliverable = namedtuple("Deliverable", 'Week Person Category ProductFeature Goal Description ExpectedVelocity UnexpectedVelocity TotalVelocity')
+        Deliverable = namedtuple("Deliverable",
+                                 'Week Person Category ProductFeature Goal Description ExpectedVelocity UnexpectedVelocity TotalVelocity')
         goal = d.goal.name if d.goal else ""
         product_feature = str(d.product_feature) if d.product_feature else ""
         return Deliverable(d.week, str(d.person), d.category, product_feature, goal,
@@ -44,6 +45,18 @@ class Standup(models.Model):
             deliverables.append(self.create_tuple(d))
 
         return pd.DataFrame(deliverables)
+
+    @property
+    def accomplishment_count(self):
+        return self.accomplishment_set.count()
+
+    @property
+    def working_on_count(self):
+        return self.workingon_set.count()
+
+    @property
+    def blocker_count(self):
+        return self.blocker_set.count()
 
 
 class Deliverable(models.Model):

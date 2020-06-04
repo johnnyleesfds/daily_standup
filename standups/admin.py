@@ -69,7 +69,7 @@ class BlockerAdmin(admin.TabularInline):
 class StandupAdmin(admin.ModelAdmin):
     model = Standup
     inlines = [AccomplishmentInline, WorkingOnAdmin, BlockerAdmin]
-    list_display = ["person", "date"]
+    list_display = ["date", "person", "accomplishment_count", "working_on_count", "blocker_count"]
 
     def get_form(self, request, obj=None, **kwargs):
         # just save obj reference for future processing in Inline
