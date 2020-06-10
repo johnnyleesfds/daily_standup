@@ -12,6 +12,12 @@ class Goal(models.Model):
     class Meta:
         unique_together = ('name', 'date',)
 
+        indexes = [
+            models.Index(fields=['name', 'date']),
+            models.Index(fields=['name']),
+            models.Index(fields=['date']),
+        ]
+
     def save(self, *args, **kwargs):
         if not self.date:
             self.date = timezone.now()

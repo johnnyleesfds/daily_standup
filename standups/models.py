@@ -13,6 +13,12 @@ class Standup(models.Model):
 
     class Meta:
         unique_together = ('person', 'date',)
+        indexes = [
+            models.Index(fields=['person', 'date']),
+            models.Index(fields=['person']),
+            models.Index(fields=['date']),
+
+        ]
 
     def __str__(self):
         return str(self.person) + "-" + str(self.date)
@@ -70,6 +76,12 @@ class Deliverable(models.Model):
     class Meta:
         abstract = True
         unique_together = ('standup', 'description',)
+        indexes = [
+            models.Index(fields=['standup', 'description']),
+            models.Index(fields=['goal']),
+
+        ]
+
 
     @property
     def person(self):

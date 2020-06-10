@@ -38,7 +38,7 @@ class WorkingOnAdmin(admin.TabularInline):
         if db_field.name == "goal":
             # current_week = self.model.standup.week
             if request._obj_ is not None:
-                week = request._obj_.week
+                week = request._obj_.week - 1
                 field.queryset = Goal.objects.filter(date__week=week).order_by("tracker__product_feature",
                                                                                'name')
             else:
@@ -77,7 +77,7 @@ class StandupAdmin(admin.ModelAdmin):
         return super(StandupAdmin, self).get_form(request, obj, **kwargs)
 
     def get_queryset(self, request):
-        qs = super(StandupAdmin, self).get_queryset(request)
+        qs = super(StandupAdmin, self).get_queryset(request).order_by("-date", "person__first_name")
         if request.user.is_superuser:
             return qs
 
